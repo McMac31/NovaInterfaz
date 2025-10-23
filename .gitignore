@@ -1,0 +1,46 @@
+
+# Build Folders
+bin/
+obj/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# NuGet
+packages/
+*.nupkg
+.nuget/
+
+# Publish results
+publish/
+publish_profiles/
+
+# Rider / Resharper
+_ReSharper*/
+*.DotSettings.user
+
+# Logs, temp files
+*.log
+*.tmp
+*.cache
+
+# OS generated
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+.DS_Store
+
+# Certificates, secrets
+*.pfx
+secrets.json
+appsettings.*.json
+

@@ -1,0 +1,35 @@
+﻿<Window x:Class="InterfazNova.PedidosPendientes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InterfazNova"
+        mc:Ignorable="d"
+        Title="PedidosPendientes" Height="450" Width="800" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="Pedidos pendientes" FontSize="33" FontFamily="Arial Rounded MT Bold" Grid.Row="0" HorizontalContentAlignment="Center" Margin="0,0,0,2" />
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,0,0,0" VerticalAlignment="Center" Width="529" Grid.Row="1">
+            <Label Content="Filtrar:"  VerticalAlignment="Center" Height="30" Width="70" Background="{x:Null}" FontFamily="Arial Rounded MT Bold" FontSize="16"/>
+            <Label Content="De" Height="30" VerticalAlignment="Center" Width="38" Background="{x:Null}" FontFamily="Arial Rounded MT Bold" FontSize="16"/>
+            <DatePicker x:Name="FechaInicio"  SelectedDateFormat="Long" BorderBrush="#FFB401B5" Background="{x:Null}" />
+            <Label Content="Hasta" HorizontalAlignment="Left" VerticalAlignment="Center" Height="31" Width="70" Background="{x:Null}" FontFamily="Arial Rounded MT Bold" FontSize="16" RenderTransformOrigin="0.652,0.55"/>
+            <DatePicker x:Name="FechaFin" SelectedDateFormat="Long" BorderBrush="#FFB401B5" Background="{x:Null}" />
+        </StackPanel>
+        <Border BorderThickness="1" BorderBrush="#FFB401B5" Margin="0,40,0,-353" Grid.Row="1">
+            <DataGrid x:Name="TablaClientes" Background="Transparent" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" BorderBrush="#FFB401B5" Margin="1,-1,-1,1" HorizontalAlignment="Center">
+                <DataGrid.Columns>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Pedido" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Fecha" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Cliente" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Total" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Estado" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Border>
+
+    </Grid>
+</Window>
