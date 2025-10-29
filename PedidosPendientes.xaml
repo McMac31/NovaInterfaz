@@ -12,21 +12,22 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <Label Content="Pedidos pendientes" FontSize="33" FontFamily="Arial Rounded MT Bold" Grid.Row="0" HorizontalContentAlignment="Center" Margin="0,0,0,2" />
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,0,0,0" VerticalAlignment="Center" Width="529" Grid.Row="1">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="16,0,0,0" VerticalAlignment="Center" Width="712" Grid.Row="1">
             <Label Content="Filtrar:"  VerticalAlignment="Center" Height="30" Width="70" Background="{x:Null}" FontFamily="Arial Rounded MT Bold" FontSize="16"/>
             <Label Content="De" Height="30" VerticalAlignment="Center" Width="38" Background="{x:Null}" FontFamily="Arial Rounded MT Bold" FontSize="16"/>
-            <DatePicker x:Name="FechaInicio"  SelectedDateFormat="Long" BorderBrush="#FFB401B5" Background="{x:Null}" />
+            <DatePicker x:Name="FechaInicio"  SelectedDateFormat="Short" BorderBrush="#FFB401B5" Background="{x:Null}" />
             <Label Content="Hasta" HorizontalAlignment="Left" VerticalAlignment="Center" Height="31" Width="70" Background="{x:Null}" FontFamily="Arial Rounded MT Bold" FontSize="16" RenderTransformOrigin="0.652,0.55"/>
-            <DatePicker x:Name="FechaFin" SelectedDateFormat="Long" BorderBrush="#FFB401B5" Background="{x:Null}" />
+            <DatePicker x:Name="FechaFin" SelectedDateFormat="Short" BorderBrush="#FFB401B5" Background="{x:Null}" />
+            <Button Content="Filtrar" Click="FiltrarPorFecha_Click" Width="53" FontFamily="Arial Rounded MT Bold"/>
         </StackPanel>
         <Border BorderThickness="1" BorderBrush="#FFB401B5" Margin="0,40,0,-353" Grid.Row="1">
-            <DataGrid x:Name="TablaClientes" Background="Transparent" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" BorderBrush="#FFB401B5" Margin="1,-1,-1,1" HorizontalAlignment="Center">
+            <DataGrid x:Name="TablaClientes" Background="Transparent" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" BorderBrush="#FFB401B5" Margin="1,-1,-1,1" HorizontalAlignment="Center" FontSize="16" FontFamily="Arial Rounded MT Bold">
                 <DataGrid.Columns>
-                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Pedido" Width="*"/>
-                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Fecha" Width="*"/>
-                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Cliente" Width="*"/>
-                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Total" Width="*"/>
-                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Estado" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding Pedido}" Header="Pedido" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold"  Binding="{Binding Fecha}"  Header="Fecha" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding Cliente}" Header="Cliente" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding Total, StringFormat=C}" Header="Total" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding Estado}" Header="Estado" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

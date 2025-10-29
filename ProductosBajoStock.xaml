@@ -13,11 +13,34 @@
         </Grid.RowDefinitions>
         <Label Content="Productos Bajo Stock" FontSize="33" FontFamily="Arial Rounded MT Bold" Grid.Row="0" HorizontalContentAlignment="Center" Margin="0,0,0,2" />
         <Border BorderThickness="1" BorderBrush="#FFB401B5" Margin="0,40,0,-374" Grid.Row="1">
-            <DataGrid x:Name="TablaClientes" Background="Transparent" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" BorderBrush="Black" Margin="1,-1,-1,1" HorizontalAlignment="Center">
+            <DataGrid x:Name="TablaClientes" Background="Transparent" IsReadOnly="True" CanUserAddRows="False" AutoGenerateColumns="False" BorderBrush="Black" Margin="1,-1,-1,1" HorizontalAlignment="Center" FontFamily="Arial Rounded MT Bold" FontSize="18">
+                <DataGrid.Resources>
+                    <Style TargetType="DataGridCell">
+                        <Setter Property="Padding" Value="6,2"/>
+                    </Style>
+                </DataGrid.Resources>
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding NivelStock}" Value="Low">
+                                <Setter Property="Background" Value="#FFF34646"/>
+                        
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding NivelStock}" Value="Medium">
+                                <Setter Property="Background" Value="#FFEDD35B"/>
+                
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding NivelStock}" Value="High">
+                                <Setter Property="Background" Value="#FF60F360"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
+
                 <DataGrid.Columns>
-                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Producto" Width="*"/>
-                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Stock" Width="*"/>
-                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Header="Fecha" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding ID}" Header="ID" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding Nombre}" Header="Nombre" Width="*"/>
+                    <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding Stock}" Header="Stock" Width="*"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Border>

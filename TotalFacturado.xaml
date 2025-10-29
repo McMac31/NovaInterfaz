@@ -11,8 +11,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Total Facturado:" Grid.Row="0" HorizontalContentAlignment="Center" FontSize="33" FontFamily="Arial Rounded MT Bold"/>
-        <Label Content="*VALOR*" Grid.Row="1" HorizontalContentAlignment="Center" FontSize="33" FontFamily="Arial Rounded MT Bold"/>
+        <Label Content="Total Facturado:" Grid.Row="0" HorizontalContentAlignment="Center" FontSize="70" FontFamily="Arial Rounded MT Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Label x:Name="txtFacturado" Content="0" Grid.Row="1" FontSize="70"  FontFamily="Arial Rounded MT Bold" Margin="0,88,0,-89" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
     </Grid>
 </Window>
