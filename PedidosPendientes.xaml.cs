@@ -3,34 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace InterfazNova
 {
     /// <summary>
-    /// Lógica de interacción para PedidosPendientes.xaml
     /// </summary>
     public partial class PedidosPendientes : Window
     {
+        // Cliente HTTP para llamar la API
         private static readonly HttpClient llamada = new HttpClient();
+
+        // Guardamos la lista completa en memoria para poder filtrar y restaurar
         private List<PedidoPendienteDto> listaCompletaPendientes = new List<PedidoPendienteDto>();
+
         public PedidosPendientes()
         {
             InitializeComponent();
+
+            // Al cargar la ventana obtenemos los pedidos pendientes
             Loaded += async (s, e) => await CargarPendientesAsync();
         }
 
+        // Clase para mapear la respuesta general de la API
         public class pedPndts
         {
             [JsonPropertyName("Num pedidos")]
@@ -39,6 +37,8 @@ namespace InterfazNova
             [JsonPropertyName("Pedidos Pendientes")]
             public List<PedidoPendienteDto> PedidosPendientes { get; set; }
         }
+
+        // Clase para mapear cada pedido pendiente individual
         public class PedidoPendienteDto
         {
             [JsonPropertyName("id")]
@@ -59,15 +59,22 @@ namespace InterfazNova
             [JsonPropertyName("picking_ids")]
             public JsonElement PickingIds { get; set; }
         }
+
+        // Función para cargar los pedidos pendientes desde la API
         private async Task CargarPendientesAsync()
         {
             string url = "https://apitechsolutions.duckdns.org/api/ventas/pendientes";
+
             try
             {
                 var dto = await llamada.GetFromJsonAsync<pedPndts>(url);
+
                 if (dto != null && dto.PedidosPendientes != null)
                 {
+                    // Guardamos la lista completa en memoria
                     listaCompletaPendientes = dto.PedidosPendientes;
+
+                    // Transformamos la lista para que el DataGrid pueda mostrarla
                     var listaParaGrid = listaCompletaPendientes.Select(p => new
                     {
                         Pedido = p.Name,
@@ -76,10 +83,12 @@ namespace InterfazNova
                         Total = p.AmountTotal,
                         Estado = "Pendiente envío"
                     }).ToList();
+
                     TablaClientes.ItemsSource = listaParaGrid;
                 }
                 else
                 {
+                    // Si no hay pedidos, limpiamos el DataGrid
                     TablaClientes.ItemsSource = null;
                 }
             }
@@ -89,6 +98,7 @@ namespace InterfazNova
             }
         }
 
+        // Función que extrae el nombre del cliente desde el JsonElement
         private string ExtraerNombreCliente(JsonElement partnerId)
         {
             try
@@ -97,9 +107,11 @@ namespace InterfazNova
                     return partnerId[1].GetString() ?? "";
             }
             catch { }
+
             return "";
         }
 
+        // Filtra los pedidos por rango de fechas seleccionado
         private void FiltrarPorFecha_Click(object sender, RoutedEventArgs e)
         {
             if (FechaInicio.SelectedDate == null || FechaFin.SelectedDate == null)
@@ -127,12 +139,16 @@ namespace InterfazNova
                     Estado = "Pendiente envío"
                 })
                 .ToList();
+
             TablaClientes.ItemsSource = filtrados;
         }
+
+        // Limpia el filtro de fechas y restaura la lista completa
         private void LimpiarFiltro_Click(object sender, RoutedEventArgs e)
         {
             FechaInicio.SelectedDate = null;
             FechaFin.SelectedDate = null;
+
             var listaOriginal = listaCompletaPendientes.Select(p => new
             {
                 Pedido = p.Name,
@@ -141,9 +157,8 @@ namespace InterfazNova
                 Total = p.AmountTotal,
                 Estado = "Pendiente envío"
             }).ToList();
+
             TablaClientes.ItemsSource = listaOriginal;
         }
-
-
     }
 }

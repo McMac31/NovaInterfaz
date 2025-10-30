@@ -78,7 +78,7 @@
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
-                <Button Content="Clientes destacados" Style="{StaticResource Botones}" Click="Button_Click" />
+                <Button Content="Clientes destacados" Style="{StaticResource Botones}" Click="AbrirClientDestac_Click" />
             </StackPanel>
         </DockPanel>
 
