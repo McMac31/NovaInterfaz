@@ -129,6 +129,21 @@ namespace InterfazNova
                 .ToList();
             TablaClientes.ItemsSource = filtrados;
         }
+        private void LimpiarFiltro_Click(object sender, RoutedEventArgs e)
+        {
+            FechaInicio.SelectedDate = null;
+            FechaFin.SelectedDate = null;
+            var listaOriginal = listaCompletaPendientes.Select(p => new
+            {
+                Pedido = p.Name,
+                Fecha = p.DateOrder,
+                Cliente = ExtraerNombreCliente(p.PartnerId),
+                Total = p.AmountTotal,
+                Estado = "Pendiente envío"
+            }).ToList();
+            TablaClientes.ItemsSource = listaOriginal;
+        }
+
 
     }
 }

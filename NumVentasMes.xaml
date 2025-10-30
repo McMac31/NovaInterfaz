@@ -1,26 +1,102 @@
 ﻿<Window x:Class="InterfazNova.NumVentasMes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InterfazNova"
-        mc:Ignorable="d"
-        Title="NumVentasMes" Height="450" Width="800">
-    <Grid Margin="0,0,0,87">
+        Title="Resumen Ventas" Height="380" Width="620"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Background="#FFFDFDFE">
+    <Window.Resources>
+        <!--Sombra -->
+        <DropShadowEffect x:Key="sombraCard" Color="#22000000" BlurRadius="8" ShadowDepth="2"/>
+
+        <!-- Estilos -->
+        <Style x:Key="bordeCard" TargetType="Border">
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="Padding" Value="12"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#FFB401B5"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Effect" Value="{StaticResource sombraCard}"/>
+        </Style>
+
+        <Style x:Key="tituloText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Arial Rounded MT Bold"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Foreground" Value="#222222"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="numeroVentas" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Arial Rounded MT Bold"/>
+            <Setter Property="FontSize" Value="72"/>
+            <Setter Property="Foreground" Value="#222222"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="SmallButton" TargetType="Button">
+            <Setter Property="Background" Value="#FFB401B5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="Margin" Value="6,0,0,0"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="FontFamily" Value="Arial Rounded MT Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+
+        <Style x:Key="textoVentas" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="Foreground" Value="#666666"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Barra de Progreso -->
+        <Style TargetType="ProgressBar" x:Key="barraProgreso">
+            <Setter Property="Height" Value="18"/>
+            <Setter Property="Foreground" Value="#FFB401B5"/>
+            <Setter Property="Background" Value="#FFF0EAF2"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Label Content="Resumen Total de ventas" HorizontalAlignment="Center" Grid.Row="0" VerticalAlignment="Top" FontSize="24" FontFamily="Arial Rounded MT Bold" Margin="0,10,0,0"/>
-        <StackPanel Margin="109,10,109,88" Grid.Row="1">
-            <TextBlock x:Name="numVentas" Text="0" HorizontalAlignment="Center" FontSize="70"/>
-            
-        </StackPanel>
-        <StackPanel Grid.Row="1" Margin="0,146,0,-40">
-            <ProgressBar x:Name="barraVentas" Height="28" Width="524" LargeChange="0" Maximum="100" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-        </StackPanel>
+        <!-- Título -->
+        <TextBlock Grid.Row="0" Text="Resumen total de ventas" Style="{StaticResource tituloText}" Margin="0,6,0,8"/>
 
+        <!-- Card grande com el numero -->
+        <Border Grid.Row="1" Style="{StaticResource bordeCard}" Margin="10,0,10,8">
+            <StackPanel>
+                <TextBlock Text="Nº ventas (mes)" Style="{StaticResource textoVentas}" Margin="0,0,0,6"/>
+                <TextBlock x:Name="numVentas" Text="0" Style="{StaticResource numeroVentas}" />
+            </StackPanel>
+        </Border>
 
+        <!-- Barra de progreso y texto -->
+        <Border Grid.Row="2" Style="{StaticResource bordeCard}" HorizontalAlignment="Stretch" Margin="8,0,8,8">
+            <StackPanel>
+                <TextBlock Text="Progreso respecto al objetivo" Style="{StaticResource textoVentas}" Margin="0,0,0,6"/>
+                <Grid>
+                    <ProgressBar x:Name="barraVentas" Style="{StaticResource barraProgreso}" Minimum="0" Maximum="100" Value="0" />
+                    <!-- Texto encima de la barra mostrando porcentaje -->
+                    <TextBlock x:Name="TxtPorcentaje" Text="0%" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Arial Rounded MT Bold" Foreground="#222222"/>
+                </Grid>
+
+                <!--Objetivo y actual -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <TextBlock Text="Objetivo: " Style="{StaticResource textoVentas}" Margin="0,0,6,0"/>
+                    <TextBlock x:Name="TxtObjetivo" Text="100" FontFamily="Arial Rounded MT Bold" Foreground="#333333" Margin="0,0,12,0"/>
+                    <TextBlock Text="Actual: " Style="{StaticResource textoVentas}" Margin="0,0,6,0"/>
+                    <TextBlock x:Name="TxtActual" Text="0" FontFamily="Arial Rounded MT Bold" Foreground="#333333"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

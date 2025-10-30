@@ -8,35 +8,35 @@
         WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
-        <!-- Sombra reutilizable -->
-        <DropShadowEffect x:Key="CardShadow" Color="#22000000" BlurRadius="8" ShadowDepth="2"/>
+        <!-- Sombra -->
+        <DropShadowEffect x:Key="sombraCard" Color="#22000000" BlurRadius="8" ShadowDepth="2"/>
 
-        <!-- Estilo de tarjeta -->
-        <Style x:Key="CardBorder" TargetType="Border">
+        <!-- Estilo de Card -->
+        <Style x:Key="cardBorde" TargetType="Border">
             <Setter Property="CornerRadius" Value="10"/>
             <Setter Property="Padding" Value="10"/>
             <Setter Property="Margin" Value="10"/>
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderBrush" Value="#FFB401B5"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Effect" Value="{StaticResource CardShadow}"/>
+            <Setter Property="Effect" Value="{StaticResource sombraCard}"/>
         </Style>
 
-        <Style x:Key="CardTitle" TargetType="TextBlock">
+        <Style x:Key="tituloCard" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Arial Rounded MT Bold"/>
             <Setter Property="FontSize" Value="13"/>
             <Setter Property="Foreground" Value="#333333"/>
             <Setter Property="TextAlignment" Value="Center"/>
         </Style>
 
-        <Style x:Key="CardNumber" TargetType="TextBlock">
+        <Style x:Key="numCard" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Arial Rounded MT Bold"/>
             <Setter Property="FontSize" Value="30"/>
             <Setter Property="Foreground" Value="#111111"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
         </Style>
 
-        <Style x:Key="SmallButton" TargetType="Button">
+        <Style x:Key="Botones" TargetType="Button">
             <Setter Property="Background" Value="#FFB401B5"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Padding" Value="8,4"/>
@@ -44,6 +44,7 @@
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="FontFamily" Value="Arial Rounded MT Bold"/>
             <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect" Value="{StaticResource sombraCard}"/>
         </Style>
 
         <!-- Estilo para header DataGrid -->
@@ -69,40 +70,44 @@
         <!-- Cabecera -->
         <DockPanel Grid.Row="0" Margin="0,6,0,16">
             <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
+                <StackPanel.Effect>
+                    <DropShadowEffect Color="#FFA800BB" BlurRadius="2" Opacity="0.5"/>
+                </StackPanel.Effect>
                 <TextBlock Text="TechSolutions" FontFamily="Calisto MT" FontSize="36" FontWeight="Bold" Foreground="#212121"/>
+                
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right">
-                <Button Content="Clientes destacados" Style="{StaticResource SmallButton}" Click="Button_Click" />
+                <Button Content="Clientes destacados" Style="{StaticResource Botones}" Click="Button_Click" />
             </StackPanel>
         </DockPanel>
 
-        <!-- Tarjetas (cards) -->
-        <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemWidth="200" ItemHeight="120" Width="752" Height="207">
-            <Border Style="{StaticResource CardBorder}" Width="167" Height="96" MouseDown="AbrirCuadroVentas" Cursor="Hand">
+        <!-- Tarjetas -->
+        <WrapPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" ItemWidth="200" ItemHeight="120" Width="420" Height="207">
+            <Border Style="{StaticResource cardBorde}" Height="96" MouseDown="AbrirCuadroVentas" Cursor="Hand" Margin="16,12,7,12">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock Text="Nº ventas" Style="{StaticResource CardTitle}"/>
-                    <TextBlock x:Name="TxtNumVentas" Text="0" Style="{StaticResource CardNumber}" Margin="0,6,0,0"/>
+                    <TextBlock Text="Nº ventas" Style="{StaticResource tituloCard}"/>
+                    <TextBlock x:Name="TxtNumVentas" Text="0" Style="{StaticResource numCard}" Margin="0,6,0,0"/>
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource CardBorder}" Width="164" Height="98" MouseDown="AbrirTotal" Cursor="Hand">
+            <Border Style="{StaticResource cardBorde}" Width="164" Height="98" MouseDown="AbrirTotal" Cursor="Hand">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock Text="Total facturado" Style="{StaticResource CardTitle}"/>
+                    <TextBlock Text="Total facturado" Style="{StaticResource tituloCard}"/>
                     <Label x:Name="TxtNumTotal" Content="0" HorizontalContentAlignment="Center" FontFamily="Arial Rounded MT Bold" FontSize="24" Foreground="#111111" BorderThickness="0" Padding="0" Margin="0,6,0,0"/>
                 </StackPanel>
             </Border>
 
-            <Border Style="{StaticResource CardBorder}" Width="176" Height="100" MouseDown="AbrirStockBajo" Cursor="Hand">
+            <Border Style="{StaticResource cardBorde}" MouseDown="AbrirStockBajo" Cursor="Hand" Margin="16,0,7,34">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock Text="Productos con bajo stock" Style="{StaticResource CardTitle}" TextWrapping="Wrap" Width="180"/>
-                    <TextBlock x:Name="txtStockBajo" Text="0" Style="{StaticResource CardNumber}" Margin="0,6,0,0"/>
+                    <TextBlock Text="Productos con bajo stock" Style="{StaticResource tituloCard}" TextWrapping="Wrap" Width="134" Height="28"/>
+                    <TextBlock x:Name="txtStockBajo" Text="0" Style="{StaticResource numCard}" Margin="0,6,0,0"/>
                 </StackPanel>
             </Border>
-            <Border Style="{StaticResource CardBorder}" MouseDown="AbrirPedidosPen" Cursor="Hand" Margin="10,0,-19,34">
+            <Border Style="{StaticResource cardBorde}" MouseDown="AbrirPedidosPen" Cursor="Hand" Margin="18,0,18,34">
                 <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <TextBlock Text="Pedidos pendientes de envío" Style="{StaticResource CardTitle}" TextWrapping="Wrap" Width="180"/>
-                    <TextBlock x:Name="TxtPedidospndts" Text="0" Style="{StaticResource CardNumber}" Margin="0,6,0,0"/>
+                    <TextBlock Text="Pedidos pendientes de envío" Style="{StaticResource tituloCard}" TextWrapping="Wrap" Width="133" Height="28"/>
+                    <TextBlock x:Name="TxtPedidospndts" Text="0" Style="{StaticResource numCard}" Margin="0,6,0,0"/>
                 </StackPanel>
             </Border>
         </WrapPanel>
@@ -114,11 +119,12 @@
             <DatePicker x:Name="FechaInicio" SelectedDateFormat="Short" BorderBrush="#FFB401B5" Width="130" Margin="4,0"/>
             <TextBlock Text="Hasta" VerticalAlignment="Center" Margin="8,0,0,0"/>
             <DatePicker x:Name="FechaFin" SelectedDateFormat="Short" BorderBrush="#FFB401B5" Width="130" Margin="4,0,0,0"/>
-            <Button Content="Filtrar" Style="{StaticResource SmallButton}" Click="FiltrarPorFecha_Click" Margin="10,0,0,0"/>
+            <Button Content="Filtrar" Style="{StaticResource Botones}" Click="FiltrarPorFecha_Click" Margin="10,0,0,0"/>
+            <Button Content="Limpiar" Style="{StaticResource Botones}" Click="LimpiarFiltro_Click" Margin="10,0,0,0"/>
         </StackPanel>
 
         <!-- DataGrid -->
-        <Border Grid.Row="2" BorderBrush="#FFB401B5" BorderThickness="1" CornerRadius="5" Padding="6" Margin="0,41,0,0" Grid.RowSpan="2">
+        <Border Grid.Row="2" BorderBrush="#FFB401B5" BorderThickness="1" CornerRadius="5" Padding="6" Margin="0,41,0,-14" Grid.RowSpan="2">
             <DataGrid x:Name="TablaClientes"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
@@ -128,7 +134,7 @@
                       RowBackground="White"
                       AlternatingRowBackground="#FFF4E8F4"
                       GridLinesVisibility="None"
-                      SelectionMode="Single" Margin="0,-7,0,0">
+                      SelectionMode="Single" Margin="0,-7,0,3">
                 <DataGrid.Columns>
                     <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding Pedido}" Header="Pedido" Width="2*"/>
                     <DataGridTextColumn FontFamily="Arial Rounded MT Bold" Binding="{Binding Fecha}" Header="Fecha" Width="*"/>

@@ -234,9 +234,25 @@ namespace InterfazNova
                 Estado = v.Estado
             })
             .ToList();
-
             TablaClientes.ItemsSource = listaFiltrada;
         }
+        private void LimpiarFiltro_Click(object sender, RoutedEventArgs e)
+        {
+            FechaInicio.SelectedDate = null;
+            FechaFin.SelectedDate = null;
+            var listaOriginal = listaCompletaVentas.Select(v => new
+            {
+                Pedido = v.Nombre,
+                Fecha = v.Fecha,
+                Cliente = (v.Cliente.ValueKind == JsonValueKind.Array && v.Cliente.GetArrayLength() > 1)? v.Cliente[1].GetString(): "",
+                Total = v.Total,
+                Estado = v.Estado
+            }).ToList();
+            TablaClientes.ItemsSource = listaOriginal;
+        }
+
+
+
     }
 }
 
