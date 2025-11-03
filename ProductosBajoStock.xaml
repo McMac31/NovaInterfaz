@@ -28,17 +28,10 @@
                       GridLinesVisibility="Horizontal"
                       BorderBrush="Transparent"
                       Margin="0">
-
                 <!-- Celdas -->
                 <DataGrid.Resources>
                     <Style TargetType="DataGridCell">
                         <Setter Property="Padding" Value="6,4"/>
-                    </Style>
-                </DataGrid.Resources>
-
-                <!-- Semaforo Nivel de stock -->
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding NivelStock}" Value="Low">
                                 <Setter Property="Background" Value="#FFF34646"/>
@@ -51,8 +44,7 @@
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
-                </DataGrid.RowStyle>
-                
+                </DataGrid.Resources>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}" Width="100"/>
                     <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*"/>

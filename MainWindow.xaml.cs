@@ -44,10 +44,10 @@ namespace InterfazNova
             public int Id { get; set; }
 
             [JsonPropertyName("name")]
-            public string Nombre { get; set; }
+            public string Nombre { get; set; } = "";
 
             [JsonPropertyName("date_order")]
-            public string Fecha { get; set; }
+            public string Fecha { get; set; } = "";
 
             [JsonPropertyName("partner_id")]
             //Uso de JSONElement para evitar errores 
@@ -57,20 +57,24 @@ namespace InterfazNova
             public decimal Total { get; set; }
 
             [JsonPropertyName("state")]
-            public string Estado { get; set; }
+            public string Estado { get; set; } = "";
         }
         //Clase para capturar el listado de ventas
         public class listadoVenta
         {
             [JsonPropertyName("ventas")]
-            public List<VentaApi> Ventas { get; set; }
+            public List<VentaApi> Ventas { get; set; }= new List<VentaApi>();
         }
         //Tarea para cargar el numero de ventas
-        public async Task cargarNumVentas()
+        public class numVentasObj
         {
-            //Endopoint para sumar al enlace general
+            [JsonPropertyName("num_ventas")]
+            public int Numvnts { get; set; }
+        }
+        public async Task cargarNumVentas()
+        {  //Endpoint para sumar al enlace general
             string endpoint = "ventas";
-            string url = conexApiUrl + endpoint;
+            string url = conexApiUrl+endpoint;
             try //Control de errores
             {
                 //Captura de los datos del json
@@ -84,9 +88,9 @@ namespace InterfazNova
                     TxtNumVentas.Text = "0"; //Si no hay datos muestro 0 por defecto
                 }
             }
-            catch(Exception err)
+            catch (Exception err)
             {
-                MessageBox.Show("Error al obtener num ventas consulte con el admin: "+ err.Message);  //Capturamos el error e indicamos pasos a seguir
+                MessageBox.Show("Error al obtener num ventas consulte con el admin: " + err.Message);  //Capturamos el error e indicamos pasos a seguir
             }
         }
         //Tarea para cargar numero total de ventas
@@ -159,12 +163,14 @@ namespace InterfazNova
                 MessageBox.Show("Error al obtener Productos con stock bajo consulte con el admin: " + err.Message); //Capturamos el error e indicamos pasos a seguir
             }
         }
+
+
         private List<VentaApi> listaCompletaVentas = new List<VentaApi>(); //Listado para los pedidos
         //Tarea para Mostrar los datos en el DataGrid
         public async Task cargarVentasCompleto()
         {//Endopoint para sumar al enlace general
             string endpoint = "ventas/detalles";
-            string url = conexApiUrl + endpoint;
+            string url = conexApiUrl+endpoint;
 
             try //Control de errores
             {
@@ -178,7 +184,7 @@ namespace InterfazNova
                     {
                         Pedido = v.Nombre,
                         Fecha = v.Fecha,
-                        Cliente = (v.Cliente.ValueKind == JsonValueKind.Array && v.Cliente.GetArrayLength() > 1)? v.Cliente[1].GetString(): "", //Formateo y verificacion de datos para controlar el JSONElement
+                        Cliente = (v.Cliente.ValueKind == JsonValueKind.Array && v.Cliente.GetArrayLength() > 1) ? v.Cliente[1].GetString() : "", //Formateo y verificacion de datos para controlar el JSONElement
                         Total = v.Total,
                         Estado = v.Estado
                     }).ToList(); //Funcion para volver lista

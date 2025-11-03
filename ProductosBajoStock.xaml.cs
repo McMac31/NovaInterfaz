@@ -28,13 +28,13 @@ namespace InterfazNova
         public class prodBajoStock
         {
             [JsonPropertyName("id")]
-            public int Id { get; set; }
+            public int id { get; set; }
 
             [JsonPropertyName("name")]
-            public string Nombre { get; set; }
+            public string name { get; set; }
 
             [JsonPropertyName("qty_available")]
-            public decimal cantidad { get; set; }
+            public decimal qty_available { get; set; }
         }
 
         // Clase interna usada para el DataGrid
@@ -50,7 +50,6 @@ namespace InterfazNova
         private async Task CargarProductosStockBajoAsync()
         {
             string url = "https://apitechsolutions.duckdns.org/api/ventas/stockbajo";
-
             try
             {
                 var dto = await llamada.GetFromJsonAsync<List<prodBajoStock>>(url);
@@ -64,10 +63,10 @@ namespace InterfazNova
                 // Transformamos los datos de la API a un formato que usa la pagina
                 var listaParaGrid = dto.Select(p => new ProdGridItem
                 {
-                    ID = p.Id,
-                    Nombre = p.Nombre,
-                    Stock = p.cantidad,
-                    NivelStock = CalcularStockLevel(p.cantidad)
+                    ID = p.id,
+                    Nombre = p.name,
+                    Stock = p.qty_available,
+                    NivelStock = CalcularStockLevel(p.qty_available)
                 }).ToList();
 
                 // Asignamos al DataGrid
