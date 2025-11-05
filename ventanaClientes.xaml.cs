@@ -23,6 +23,15 @@ namespace InterfazNova
             Loaded += async (s, e) => await CargarClientesDestacadosAsync();
         }
 
+        // Asegura que el token esté en los headers
+        private void EnsureAuthHeader()
+        {
+            if (!string.IsNullOrEmpty(MainWindow.jwtToken) && llamada.DefaultRequestHeaders.Authorization == null)
+            {
+                llamada.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindow.jwtToken);
+            }
+        }
+
         // Clase para mapear un cliente individual
         public class ClienteDto
         {
@@ -53,6 +62,7 @@ namespace InterfazNova
 
             try
             {
+                EnsureAuthHeader();
                 var resp = await llamada.GetFromJsonAsync<ClientesDestacadosResponse>(url);
 
                 if (resp != null && resp.Clientes != null)

@@ -22,6 +22,15 @@ namespace InterfazNova
             this.Loaded += async (s, e) => await cargarTotalVentas();
         }
 
+        // Asegura que el token esté en los headers
+        private void EnsureAuthHeader()
+        {
+            if (!string.IsNullOrEmpty(MainWindow.jwtToken) && llamada.DefaultRequestHeaders.Authorization == null)
+            {
+                llamada.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindow.jwtToken);
+            }
+        }
+
         // Clase para mapear la respuesta del JSON
         public class numTotal
         {
@@ -36,6 +45,7 @@ namespace InterfazNova
 
             try
             {
+                EnsureAuthHeader();
                 var dto = await llamada.GetFromJsonAsync<numTotal>(url);
 
                 if (dto != null)

@@ -24,6 +24,15 @@ namespace InterfazNova
             Loaded += async (s, e) => await CargarProductosStockBajoAsync();
         }
 
+        // Asegura que el token esté en los headers
+        private void EnsureAuthHeader()
+        {
+            if (!string.IsNullOrEmpty(MainWindow.jwtToken) && llamada.DefaultRequestHeaders.Authorization == null)
+            {
+                llamada.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindow.jwtToken);
+            }
+        }
+
         // Clase para mapear cada producto que devuelve la API
         public class prodBajoStock
         {
@@ -52,6 +61,7 @@ namespace InterfazNova
             string url = "https://apitechsolutions.duckdns.org/api/ventas/stockbajo";
             try
             {
+                EnsureAuthHeader();
                 var dto = await llamada.GetFromJsonAsync<List<prodBajoStock>>(url);
 
                 if (dto == null)

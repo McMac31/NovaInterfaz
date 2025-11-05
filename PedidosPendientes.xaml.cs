@@ -28,6 +28,15 @@ namespace InterfazNova
             Loaded += async (s, e) => await CargarPendientesAsync();
         }
 
+        // Asegura que el token esté en los headers
+        private void EnsureAuthHeader()
+        {
+            if (!string.IsNullOrEmpty(MainWindow.jwtToken) && llamada.DefaultRequestHeaders.Authorization == null)
+            {
+                llamada.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindow.jwtToken);
+            }
+        }
+
         // Clase para mapear la respuesta general de la API
         public class pedPndts
         {
@@ -67,6 +76,7 @@ namespace InterfazNova
 
             try
             {
+                EnsureAuthHeader();
                 var dto = await llamada.GetFromJsonAsync<pedPndts>(url);
 
                 if (dto != null && dto.PedidosPendientes != null)

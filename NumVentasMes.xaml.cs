@@ -5,6 +5,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using System.Windows;
 
+
 namespace InterfazNova
 {
     /// <summary>
@@ -25,6 +26,15 @@ namespace InterfazNova
             this.Loaded += async (s, e) => await CargarYActualizarAsync();
         }
 
+        // Asegura que el token esté en los headers
+        private void EnsureAuthHeader()
+        {
+            if (!string.IsNullOrEmpty(MainWindow.jwtToken) && llamada.DefaultRequestHeaders.Authorization == null)
+            {
+                llamada.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", MainWindow.jwtToken);
+            }
+        }
+
         // Clase para mapear el JSON que devuelve el número de ventas
         public class numVentasObj
         {
@@ -39,6 +49,7 @@ namespace InterfazNova
 
             try
             {
+                EnsureAuthHeader();
                 var dto = await llamada.GetFromJsonAsync<numVentasObj>(url);
 
                 if (dto != null)
